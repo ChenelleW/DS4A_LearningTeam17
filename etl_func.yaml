@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  etlfunc:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.9
+      CodeUri: .
+      Description: ''
+      MemorySize: 10240
+      Timeout: 900
+      Role: >-
+        arn:aws:iam::397410343504:role/service-role/downloadFileToS3-role-f27jv6pg
+      Environment:
+        Variables:
+          API: AM0J3JHW35CBI4KU
+          ARN: >-
+            arn:aws:iam::397410343504:role/service-role/AmazonRedshift-CommandsAccessRole-20230706T191545
+          BASE: 'https://www.alphavantage.co/query?'
+          FDIC: >-
+            https://s3-us-gov-west-1.amazonaws.com/cg-2e5c99a6-e282-42bf-9844-35f5430338a5/downloads/institutions.csv
+          host: cluster-test.cmeoeekcgauf.us-east-1.redshift.amazonaws.com
+          password: Password123
+          user: awsuser
+      Layers:
+        - 'arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python39:8'
+        - 'arn:aws:lambda:us-east-1:397410343504:layer:damn:1'
+        - 'arn:aws:lambda:us-east-1:397410343504:layer:newapp6:1'
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: Auto
